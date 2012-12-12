@@ -10,7 +10,7 @@ class Display {
 	SDL_Surface *bubbleSurface;
 	SDL_Surface *worldSurface;
 public:
-	void init(bool fullscreen, int width = -1, int height = -1);
+	void init(bool fullscreen, int width, int height);
 	void draw(SDL_Surface *image, Sint16 x, Sint16 y);
 	void draw(SDL_Surface *image, Point p);
 

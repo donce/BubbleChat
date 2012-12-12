@@ -4,14 +4,15 @@
 
 void Display::init(bool fullscreen, int width, int height) {
 	SDL_Init(SDL_INIT_VIDEO);
-	Uint32 flags = SDL_DOUBLEBUF;//SDL_SWSURFACE | SDL_DOUBLEBUF;
-	if (fullscreen)
-		flags |= SDL_FULLSCREEN;
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	if (width == -1 || height == -1) {
 		const SDL_VideoInfo *info = SDL_GetVideoInfo();
 		width = info->current_w;
 		height = info->current_h;
-	} 
+	}
+	Uint32 flags = SDL_DOUBLEBUF;//SDL_SWSURFACE | SDL_DOUBLEBUF;
+	if (fullscreen)
+		flags |= SDL_FULLSCREEN;
 	screenSurface = SDL_SetVideoMode(width, height, 32, flags);
 
 	bubbleSurface = SDL_LoadBMP("data/bubble.bmp");
