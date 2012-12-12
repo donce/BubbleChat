@@ -1,4 +1,8 @@
+#include <iostream>
+
 #include "chat.h"
+
+using namespace std;
 
 #define DIRS_COUNT 4
 const int DIRS[DIRS_COUNT][2] = {
@@ -10,11 +14,14 @@ const int DIRS[DIRS_COUNT][2] = {
 bool dirButtons[DIRS_COUNT];//up, down, right, left
 bool dirChanged;
 
-Chat chat(false, 640, 480);
-
 int main() {
+	string name;
+	cout << "Enter your name: ";
+	cin >> name;
+
+	Chat chat(name, false, 640, 480);
 	Uint32 ticks = SDL_GetTicks();
-	std::string message = "";
+	string message = "";
 
 	bool running = true;
 	while (running) {

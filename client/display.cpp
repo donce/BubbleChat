@@ -19,7 +19,7 @@ void Display::init(bool fullscreen, int width, int height) {
 		width = info->current_w;
 		height = info->current_h;
 	}
-	Uint32 flags = SDL_DOUBLEBUF;//SDL_SWSURFACE | SDL_DOUBLEBUF;
+	Uint32 flags = SDL_DOUBLEBUF;//SDL_SWSURFACE
 	if (fullscreen)
 		flags |= SDL_FULLSCREEN;
 	screenSurface = SDL_SetVideoMode(width, height, 32, flags);

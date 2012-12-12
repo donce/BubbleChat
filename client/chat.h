@@ -10,14 +10,16 @@
 
 class Chat {
 	std::vector<Bubble> bubbles;
+	
 	int myIndex;
+	Bubble* me();
 
 	Display display;
 public:
-	Chat(bool fullscreen = true, int width = -1, int height = -1);
+	Chat(std::string name, bool fullscreen = true, int width = -1, int height = -1);
 	void progress(int time);
-	void sayMessage(std::string s);
 	void setDir(Point dir);
+	void sayMessage(std::string s);
 };
 	
 #endif

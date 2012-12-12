@@ -1,10 +1,19 @@
 #include "chat.h"
 
-Chat::Chat(bool fullscreen, int width, int height) {
-	display.init(fullscreen, width, height);
+#include <iostream>
+
+Bubble* Chat::me() {
+	if (myIndex < 0 || myIndex >= bubbles.size())
+		throw "My bubble index out of range!";
+	return &bubbles[myIndex];
+}
+
+Chat::Chat(std::string name, bool fullscreen, int width, int height) {
 	myIndex = 0;
-	Bubble me;
-	bubbles.push_back(me);
+	Bubble myBubble;
+	bubbles.push_back(myBubble);
+	me()->setName(name);
+	display.init(fullscreen, width, height);
 }
 
 void Chat::progress(int time) {
@@ -18,8 +27,9 @@ void Chat::progress(int time) {
 }
 
 void Chat::sayMessage(std::string s) {
-	printf("Message: %s\n", s.c_str());
+	me()->say(s);
 }
+
 void Chat::setDir(Point dir) {
 	bubbles[myIndex].setDir(dir);
 }
