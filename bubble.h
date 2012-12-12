@@ -4,7 +4,7 @@
 #include "point.h"
 
 class Bubble {
-	static const double SPEED = 5;
+	static const double SPEED = 5*64;
 	Point pos;
 	Point dir;
 public:

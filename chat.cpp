@@ -20,18 +20,22 @@ bool dirChanged;
 
 void progress(int time) {
 	for (int i = 0; i < bubbles.size(); ++i)
+		display.cleanBubble(bubbles[i]);
+	for (int i = 0; i < bubbles.size(); ++i)
 		bubbles[i].progress(time);
 	for (int i = 0; i < bubbles.size(); ++i)
 		display.drawBubble(bubbles[i]);
+	display.progress();
 }
 
 int main() {
-	//display.init(true);
-	display.init(false, 640, 480);
+	display.init(true);
+	//display.init(false, 640, 480);
 
 	Bubble me;
 	bubbles.push_back(me);
 
+	Uint32 ticks = SDL_GetTicks();
 	bool running = true;
 	while (running) {
 		SDL_Event e;
@@ -67,8 +71,9 @@ int main() {
 				}
 			bubbles[0].setDir(newDir);
 		}
-		progress(100);
-		SDL_Delay(1);
+		Uint32 nowTics = SDL_GetTicks();
+		progress(nowTics - ticks);
+		ticks = nowTics;
 	}
 	SDL_Quit();
 
