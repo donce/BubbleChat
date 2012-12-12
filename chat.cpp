@@ -1,5 +1,7 @@
-#include <stdbool.h>
-#include "SDL/SDL.h"
+#include "display.h"
+#include "bubble.h"
+
+#include <vector>
 
 #define DIRS_COUNT 4
 const int DIRS[DIRS_COUNT][2] = {
@@ -9,31 +11,31 @@ const int DIRS[DIRS_COUNT][2] = {
 	{-1, 0}
 };
 
-SDL_Surface *screen;
-int acceleration[2];
-int bx, by;
+Display display;
+
+std::vector<Bubble> bubbles;
 
 bool dirButtons[DIRS_COUNT];//up, down, right, left
+bool dirChanged;
 
-void draw(SDL_Surface *image, Sint16 x, Sint16 y) {
-	SDL_Rect rSrc, rDst;
-	rSrc.w = rDst.w = image->w;
-	rSrc.h = rDst.h = image->h;
-	rSrc.x = rSrc.y = 0;
-	rDst.x = x;
-	rDst.y = y;
-	SDL_BlitSurface(image, &rSrc, screen, &rDst);
-	SDL_UpdateRects(screen, 1, &rDst);
+void progress(int time) {
+	for (int i = 0; i < bubbles.size(); ++i)
+		bubbles[i].progress(time);
+	for (int i = 0; i < bubbles.size(); ++i)
+		display.drawBubble(bubbles[i]);
 }
 
-int main(int argc, char* args[]) {
-	SDL_Init(SDL_INIT_VIDEO);
-	screen = SDL_SetVideoMode(1366, 768, 32, SDL_SWSURFACE | SDL_FULLSCREEN);
+int main() {
+	//display.init(true);
+	display.init(false, 640, 480);
 
-	SDL_Surface *bubble = SDL_LoadBMP("data/bubble.bmp");
+	Bubble me;
+	bubbles.push_back(me);
+
 	bool running = true;
 	while (running) {
 		SDL_Event e;
+		dirChanged = false;
 		while (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT)
 				running = 0;
@@ -41,26 +43,31 @@ int main(int argc, char* args[]) {
 				int nr = e.key.keysym.sym;
 				if (nr == 27)
 					running = false;
-				else if (nr >= 273 && nr <= 276)
+				else if (nr >= 273 && nr <= 276) {
 					dirButtons[nr-273] = true;
+					dirChanged = true;
+				}
 				else
 					printf("Unused button down: %d\n", nr);
 			}
 			else if (e.type == SDL_KEYUP) {
 				int nr = e.key.keysym.sym;
-				if (nr >= 273 && nr <= 276)
+				if (nr >= 273 && nr <= 276) {
 					dirButtons[nr-273] = false;
+					dirChanged = true;
+				}
 			}
 		}
-		acceleration[0] = acceleration[1] = 0;
-		for (int i = 0; i < DIRS_COUNT; ++i)
-			if (dirButtons[i]) {
-				acceleration[0] = DIRS[i][0];
-				acceleration[1] = DIRS[i][1];
-			}
-		bx += acceleration[0];
-		by += acceleration[1];
-		draw(bubble, bx, by);
+		if (dirChanged) {
+			Point newDir;
+			for (int i = 0; i < DIRS_COUNT; ++i)
+				if (dirButtons[i]) {
+					newDir.x += DIRS[i][0];
+					newDir.y += DIRS[i][1];
+				}
+			bubbles[0].setDir(newDir);
+		}
+		progress(100);
 		SDL_Delay(1);
 	}
 	SDL_Quit();
