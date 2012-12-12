@@ -5,6 +5,8 @@
 #include "point.h"
 #include "bubble.h"
 
+const int TRANSPARENT_COLOR = 0xFF00FF;
+
 class Display {
 	SDL_Surface *screenSurface;
 	SDL_Surface *bubbleSurface;
@@ -19,6 +21,8 @@ public:
 	void drawBubble(const Bubble &buble);
 
 	void progress();
+
+	static SDL_Surface* loadBMP(const char *file);
 };
 
 #endif

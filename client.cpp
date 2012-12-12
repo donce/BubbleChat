@@ -10,7 +10,7 @@ const int DIRS[DIRS_COUNT][2] = {
 bool dirButtons[DIRS_COUNT];//up, down, right, left
 bool dirChanged;
 
-Chat chat;
+Chat chat(false, 640, 480);
 
 int main() {
 	Uint32 ticks = SDL_GetTicks();

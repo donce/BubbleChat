@@ -1,6 +1,15 @@
 #include "display.h"
 
 #include "world.h"//TODO: move loading
+#include <string>
+
+SDL_Surface* Display::loadBMP(const char *file) {
+	SDL_Surface *surface = SDL_LoadBMP(file);
+	if (surface == NULL)
+		throw (std::string("Error while loading image:") + std::string(file)).c_str();
+	SDL_SetColorKey(surface, SDL_SRCCOLORKEY, TRANSPARENT_COLOR);
+	return surface;
+}
 
 void Display::init(bool fullscreen, int width, int height) {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -15,7 +24,7 @@ void Display::init(bool fullscreen, int width, int height) {
 		flags |= SDL_FULLSCREEN;
 	screenSurface = SDL_SetVideoMode(width, height, 32, flags);
 
-	bubbleSurface = SDL_LoadBMP("data/bubble.bmp");
+	bubbleSurface = loadBMP("data/bubble.bmp");
 	World world;
 	worldSurface = world.getSurface();
 	SDL_Rect rect;
