@@ -25,7 +25,7 @@ void Display::init(bool fullscreen, int width, int height) {
 	screenSurface = SDL_SetVideoMode(width, height, 32, flags);
 
 	bubbleSurface = loadBMP("data/bubble.bmp");
-	World world;
+	World world("world");
 	worldSurface = world.getSurface();
 	SDL_Rect rect;
 	rect.x = rect.y = 0;;

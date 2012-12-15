@@ -1,12 +1,31 @@
 #include "world.h"
-#include <string>
 #include "display.h"
+#include <string>
+#include <fstream>
+
+using namespace std;
 
 const int WORLD_IMAGES_COUNT = 2;
 const char *WORLD_IMAGES[WORLD_IMAGES_COUNT] = {
 	"ground",
 	"ground2",
 };
+
+World::World(const char *file) {
+	ifstream f("world");
+	f >> height >> width;
+	data = new int[width*height];
+	for (int i = 0; i < height; ++i)
+		for (int j = 0; j < width; ++j) {
+			int now;
+			if (!(f >> now))
+				throw "Failed to read tile number";
+			if (now < 0 || now >= WORLD_IMAGES_COUNT)
+				throw "Map tile number out of bounds";
+			data[i*width+j] = now;
+		}
+	f.close();
+}
 
 SDL_Surface* World::getSurface() {
 	SDL_Surface *world_images[WORLD_IMAGES_COUNT];
@@ -15,10 +34,6 @@ SDL_Surface* World::getSurface() {
 		world_images[i] = Display::loadBMP(s.c_str());
 	}
 	const int BLOCK_SIZE = 64;
-
-	//TODO:REMOVE
-	width = 10;
-	height = 10;
 
 	Uint32 flags;
 	SDL_Surface *world = SDL_CreateRGBSurface(flags, width*BLOCK_SIZE, height*BLOCK_SIZE, 32, 0, 0, 0, 0);
@@ -33,7 +48,7 @@ SDL_Surface* World::getSurface() {
 		for (int j = 0; j < 10; j++) {
 			rDst.x = j*BLOCK_SIZE;
 			rDst.y = i*BLOCK_SIZE;
-			SDL_BlitSurface(world_images[(i+j)%2], &rSrc, world, &rDst);
+			SDL_BlitSurface(world_images[data[i*height+j]], &rSrc, world, &rDst);
 		}
 	return world;
 }

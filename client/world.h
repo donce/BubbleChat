@@ -7,6 +7,7 @@ class World {
 	int width, height;
 	int *data;
 public:
+	World(const char *file);
 	SDL_Surface* getSurface();//TODO: const
 };
 
