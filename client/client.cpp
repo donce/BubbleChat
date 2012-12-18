@@ -1,8 +1,12 @@
 #include <iostream>
+#include <vector>
+#include "network.h"
 
 #include "chat.h"
 
 using namespace std;
+
+Chat *chatObject;
 
 #define DIRS_COUNT 4
 const int DIRS[DIRS_COUNT][2] = {
@@ -19,7 +23,10 @@ int main() {
 	cout << "Enter your name: ";
 	cin >> name;
 
-	Chat chat(name, false, 640, 480);
+	Network net;
+	Chat chat(name, &net, false, 640, 480);
+	chatObject = &chat;
+
 	Uint32 ticks = SDL_GetTicks();
 	string message = "";
 
@@ -66,7 +73,8 @@ int main() {
 					newDir.x += DIRS[i][0];
 					newDir.y += DIRS[i][1];
 				}
-			chat.setDir(newDir);
+			chat.setDir(-1, newDir);
+			
 		}
 		Uint32 nowTics = SDL_GetTicks();
 		chat.progress(nowTics - ticks);

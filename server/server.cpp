@@ -1,31 +1,44 @@
+/*
+
+
+	Server for bubble chat project
+	Author: Rytis KarpuŠka
+		rytis@elektromotus.lt
+
+*/
+
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-
+#include <arpa/inet.h>
+#include <errno.h>
 #include <iostream>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#include "network.h"
+#include "server.h"
+#include "mutex.h"
 
 using namespace std;
 
-const int PORT_NO = 1397;
-
-bool connect() {
-	int s = socket(AF_INET, SOCK_STREAM, 0);
-	if (s == -1)
-		return false;
-	sockaddr_in addr;
-	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = INADDR_ANY;
-	addr.sin_port = htons(PORT_NO);
-	if (bind(s, (sockaddr*)&addr, sizeof(addr)) == -1)
-		return false;
-	listen(s, 10);
-
-	return true;
-}
-
 int main() {
-	if (!connect()) {
-		cout << "Failed to connect" << endl;
+
+	Network net;
+
+	net.init();
+
+	//network created its threads, all actions will be performet there
+	while(true){
+		sleep(1);
 	}
+
 	return 0;
 }
+
+
