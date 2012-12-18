@@ -18,7 +18,7 @@ const int DIRS[DIRS_COUNT][2] = {
 bool dirButtons[DIRS_COUNT];//up, down, right, left
 bool dirChanged;
 
-int main() {
+int run() {
 	string name;
 	cout << "Enter your name: ";
 	cin >> name;
@@ -83,4 +83,13 @@ int main() {
 	SDL_Quit();
 
 	return 0;    
+}
+
+int main() {
+	try {
+		run();
+	}
+	catch (const char *error) {
+		cout << error << endl;
+	}
 }
