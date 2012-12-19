@@ -40,10 +40,11 @@ void Network::sendData(int idx, uint8_t *data, int size)
 	if(idx < 0 || idx >= clientFD.size())
 		return;
 
+	//introduce guard time
+	timespec time = {0, 10};
+	nanosleep(&time, NULL);
+
 	//check if our socket is still valid
-	struct timeval tv;
-	tv.tv_sec = 0;
-	tv.tv_usec = 10;
 	long int fd = clientFD[idx];
 
 	clientStackMutex.lock();
