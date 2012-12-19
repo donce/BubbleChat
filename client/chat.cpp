@@ -19,7 +19,7 @@ Chat::Chat(std::string name, Network *_net, bool fullscreen, int width, int heig
 	me()->setName(name);
 	display.init(fullscreen, width, height);
 	net = _net;
-	if(!net->initConnection(me(), (char *)"127.0.0.1"))
+	if(!net->initConnection(me()))
 		exit(0);
 }
 

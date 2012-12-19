@@ -185,10 +185,15 @@ void *waitForDataWrapper(void *args)
 	return NULL;
 }
 
-int Network::initConnection(Bubble *b, char *addr, int port)
+int Network::initConnection(Bubble *b, int port)
 {
 	//save me
 	me = b;
+
+	string ip;
+	cout << "Enter IP address: ";
+	cin >> ip;
+	char *addr = (char *)ip.c_str();
 
 	//create socket
 	socketfd = socket(AF_INET, SOCK_STREAM, 0);
