@@ -55,7 +55,7 @@ public:
 	Network();
 
 
-	int initConnection(Bubble *b, char *addr, int port = DEFAULT_PORT);
+	int initConnection(Bubble *b, int port = DEFAULT_PORT);
 	void waitForData();
 	int sendData(uint8_t *data, int length);
 	bool sendPos(movementCommand_t move);

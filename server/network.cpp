@@ -40,7 +40,6 @@ void Network::sendData(int idx, uint8_t *data, int size)
 	if(idx < 0 || idx >= clientFD.size())
 		return;
 
-	//introduce guard time
 	timespec time = {0, 10};
 	nanosleep(&time, NULL);
 
@@ -203,16 +202,16 @@ void Network::parseChatCommand(int idx, int sockFD, uint8_t *buff, int size)
 		if(i == idx)
 			continue;
 
-		mePos = cls.at(idx)->getMove();
+/*		mePos = cls.at(idx)->getMove();
 		otherPos = cls.at(i)->getMove();
 		int diffX = abs(mePos.x - otherPos.y);
 		int diffY = abs(mePos.y - otherPos.y);
 
-		if(diffX*diffX + diffY*diffY >
-				ALLOWED_DISTANCE * ALLOWED_DISTANCE)
+		if(diffX > ALLOWED_DISTANCE ||
+				diffY > ALLOWED_DISTANCE)
 			continue;
 
-		sendMsg(i, sockFD, text);
+*/		sendMsg(i, sockFD, text);
 	}
 
 	

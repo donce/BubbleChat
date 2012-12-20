@@ -10,7 +10,7 @@
 #ifndef __SERVER_H_
 #define __SERVER_H_
 
-#define ALLOWED_DISTANCE	64
+#define ALLOWED_DISTANCE	32
 
 #endif
 
