@@ -41,9 +41,10 @@ Point Bubble::getDir(){
 
 void Bubble::progress(int time) {
 	pos.x += SPEED * time * dir.x / 1000;
-	pos.x = (pos.x < 0 ? 0 : pos.x > 640 ? 640 : pos.x);
+	const int MAX_W = 640-64, MAX_H = 480-64;
+	pos.x = (pos.x < 0 ? 0 : pos.x > MAX_W ? MAX_W : pos.x);
 	pos.y += SPEED * time * dir.y / 1000;
-	pos.y = (pos.y < 0 ? 0 : pos.y > 480 ? 480 : pos.y);
+	pos.y = (pos.y < 0 ? 0 : pos.y > MAX_H ? MAX_H : pos.y);
 }
 
 void Bubble::say(std::string message) {
