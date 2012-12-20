@@ -24,8 +24,9 @@ Chat::Chat(std::string name, Network *_net, bool fullscreen, int width, int heig
 }
 
 void Chat::progress(int time) {
-	for (int i = 0; i < bubbles.size(); ++i)
-		display.cleanBubble(bubbles[i]);
+	//for (int i = 0; i < bubbles.size(); ++i)
+		//display.cleanBubble(bubbles[i]);
+	display.cleanScreen();
 	for (int i = 0; i < bubbles.size(); ++i)
 		bubbles[i].progress(time);
 	for (int i = 0; i < bubbles.size(); ++i)

@@ -16,6 +16,7 @@ public:
 	void draw(SDL_Surface *image, Sint16 x, Sint16 y);
 	void draw(SDL_Surface *image, Point p);
 
+	void cleanScreen();
 	void clean(SDL_Rect &rect);
 	void cleanBubble(const Bubble &bubble);
 	void drawBubble(const Bubble &buble);

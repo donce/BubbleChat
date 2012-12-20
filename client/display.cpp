@@ -27,6 +27,10 @@ void Display::init(bool fullscreen, int width, int height) {
 	bubbleSurface = loadBMP("data/bubble.bmp");
 	World world("data/world/world.txt");
 	worldSurface = world.getSurface();
+	cleanScreen();
+}
+
+void Display::cleanScreen() {
 	SDL_Rect rect;
 	rect.x = rect.y = 0;;
 	rect.w = screenSurface->w;
